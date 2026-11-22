@@ -12,6 +12,10 @@ A 2-stage analog electrocardiogram (ECG) signal conditioning front-end designed 
    * Gain resistor $R_G = 16\text{ k}\Omega$ placed between pins 1 and 8:
      $$G_1 = 5 + \frac{80\text{ k}\Omega}{R_G} = 5 + \frac{80\text{ k}\Omega}{16\text{ k}\Omega} = 10\text{ V/V } (20\text{ dB})$$
 
+3. **Stage 3 – Level Shifter for `ESP32` ADC (`0 V – 3.3 V`)**
+* **AC Coupling & DC Bias:** $C_3 = 4.7\ \mu\text{F}$ blocks the `0 V` DC reference from the op-amp stage, while two $100\text{ k}\Omega$ resistors ($R_5, R_6$) between `3.3 V` and `GND` shift the signal baseline to **$1.65\text{ V}$** ($1.55\text{ V} - 1.75\text{ V}$ swing) for safe sampling on the `ESP32` ADC input.
+
+
 2. **Stage 2 – Active Bandpass Filter (`TLC071`)**
    * **High-pass stage:** $C_1 = 4.7\ \mu\text{F}$, $R_1 = 680\text{ k}\Omega$ ($f_{c,\text{low}} \approx 0.05\text{ Hz}$) to remove baseline wander and DC offset.
    * **Low-pass & gain stage:** $R_f = 100\text{ k}\Omega$, $R_{\text{in}} = 10\text{ k}\Omega$, $C_2 = 100\text{ nF}$ ($f_{c,\text{high}} \approx 159\text{ Hz}$) with a passband gain of:
